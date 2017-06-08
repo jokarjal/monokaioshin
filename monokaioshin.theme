@@ -1,0 +1,119 @@
+# monokaioshin
+# by jontsi <joonas.karjalainen@gmail.com>
+# for irssi 0.8.15
+# 2014.12.12
+replaces = { };
+default_color = "-1";
+abstracts = {
+  ##
+  # generic
+  ##
+  # start of a line, non-message
+  line_start = "%r«%g!%r»%n$* ";
+  # timestamp styling
+  timestamp = "%W$*%n";
+  # highlighted texts
+  hilight = "$0";
+  # nick printed	  
+  nick = "%r[%c$*%r]%n ";
+  # channel name printed
+  channel = "%c$*%n";
+  # nick host printed
+  nickhost = "%K[%g$0-%K]%n";
+  # server name printed
+  server = "%K$0-%n";
+  # comment printed
+  comment = "%K[%n$0-%K]%n";
+  # mode changes printed
+  mode = "%r«%w$0-%r»%n";
+  # reason for... stuff
+  reason = "%K[%n$0-%K]%n";
+  ##
+  # channel messages
+  ##
+  # TODO:
+  channick_hilight = "%r$0-%n";
+  chanhost_hilight = "{nickhost $0-%n}";
+  channelhilight = "%c%_$0-%_%n";
+  ban = "$0-";
+  chanhost = "{nickhost %m$0-%n}";
+  channick = "%c$*%n";
+  ##
+  # messages
+  ##
+  msgnick = "%K‹%g$0%w$1-%K›%n %|";
+  ownmsgnick = "%K‹%g$0%K$1-%K›%n %|";
+  ownnick = "%c$0-";
+  pubmsgnick = "{msgnick $0 $1-}";
+  pubnick = "$0-";
+  pubmsgmenick = "%c{msgnick $0 $1-}";
+  menick = "%r$*%n";
+  pubmsghinick = "%K«%r$1%c$2-%K»%n %|";
+  msgchannel = "%w|%c$0-";
+  privmsg = "%r$0[%g$1]%K›";
+  ownprivmsg = "%c$0 ";
+  ownprivmsgnick = "%c$0%n ";
+  ownprivnick = "%c$0%K›";
+  privmsgnick = "%r$0%K›%n ";
+  ##
+  # actions
+  ##
+  action_core = "%r * %C$0-%n";
+  action = "{action_core $0-} ";
+  ownaction = "%g * %C$0-%n ";
+  ownaction_target = "{action_core $0}{msgchannel $1} ";
+  pvtaction = "%g* %c$0-%n ";
+  pvtaction_query = "%r* $0-%n ";
+  pubaction = "{action $0-}";
+  ##
+  # other actions
+  ##
+  # /whois
+  whois = "$[8]0 : $1-";
+  # netsplits
+  netsplit = "%r$*%n";
+  netjoin = "%c$*%n";
+  # /names
+  names_prefix = "";
+  names_nick = "%r[%c$0%n$1-%r]";
+  names_nick_op = "%r[%c$0%n$1-%r]";
+  names_nick_voice = "%r[%g$0%n$1-%r]";
+  names_nick_halfop = "%r[%r$0%n$1-%r]";
+  names_users = "%r[%g$*%r]";
+  names_channel = "%c$*%n";
+  # ctcps
+  ownctcp = "%g[%r$0%K(%r$1-%K)%g]";
+  ctcp = "%g$*%n";
+  ##
+  # statusbar
+  ##
+  sb_background = "%K";
+  sbstart = "";
+  sbend = " ";
+  prompt = "%K[%c$*%K] ";
+  sb_info_bg = "%c ";
+  sb_topic_bg = "%g";
+  topicsbstart = "%K>$*";
+  topicsbend = "";
+  sb = "%K[%c$*%K] ";
+  sbmode = "|+$*";
+  sbaway = " [away]";
+  sbservertag = ":%g$0%n";
+  sb_act_sep = "%n$*";
+  sb_act_text = "%n%c$*";
+  sb_act_msg = "%c$*";
+  sb_act_hilight = "%r$*";
+  sb_act_hilight_color = "%r$0$1-%n";
+};
+formats = {
+  "fe-common/core" = {
+    join = "{channick_hilight $0} {chanhost_hilight $1} joined {channel $2}";
+    part = "{channick $0} {chanhost $1} parted {channel $2} {reason $3}";
+    kick = "{channick $0} kicked from {channel $1} by {nick $2} {reason $3}";
+    quit = "{channick $0} {chanhost $1} quits {reason $2}";
+  };
+  "fe-common/irc" = {
+    chanmode_change = "{channel $0} mode changed: {mode $1} by {nick $2}";
+    server_chanmode_change = "{netsplit ServerMode}/{channelhilight $0}: {mode $1} by {nick $2}";
+  };
+};
